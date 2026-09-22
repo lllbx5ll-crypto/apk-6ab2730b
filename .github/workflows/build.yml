@@ -28,7 +28,9 @@ jobs:
           test -f build.gradle || { echo "project build.gradle missing"; exit 1; }
           test -f app/build.gradle || { echo "app/build.gradle missing"; exit 1; }
           test -f app/src/main/AndroidManifest.xml || { echo "AndroidManifest.xml missing"; exit 1; }
+
           mkdir -p app/src/main/res/drawable
+
           if ! ls app/src/main/res/drawable/app_icon.* >/dev/null 2>&1; then
             cat > app/src/main/res/drawable/app_icon.xml <<'EOF'
           <?xml version="1.0" encoding="utf-8"?>
@@ -52,7 +54,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          cmdline-tools-version: '15859902'
+          packages: 'platform-tools'
 
       - name: Install required Android SDK packages
         shell: bash
